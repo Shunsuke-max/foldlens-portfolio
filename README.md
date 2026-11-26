@@ -8,6 +8,34 @@ Originally built for the Work & Productivity track of OpenAI Build Week 2026, Fo
 
 [Original public repository](https://github.com/Shunsuke-max/foldlens) · [macOS releases](https://github.com/Shunsuke-max/foldlens-releases/releases)
 
+![FoldLens evidence-first review overview](assets/review-overview.png)
+
+*Implemented interface, captured on September 9, 2026. The example uses experimental PDB 4HLA coordinates with illustrative confidence values, not independent AlphaFold predictions.*
+
+## Product walkthrough
+
+The following implementation screenshots were captured during the September 9, 2026 audit. They illustrate a review workflow, not a live AI performance evaluation. The Japanese interface is shown as captured.
+
+### 1. Review the evidence behind a finding
+
+![Evidence workspace with linked molecular structure and PAE matrix](assets/evidence-workspace.png)
+
+The workspace connects a selected finding to its molecular region, supporting measurements, and PAE matrix. The user can inspect the evidence before requesting an interpretation.
+
+### 2. Compare predictions rather than relying on a single score
+
+![Per-model geometric comparison](assets/model-comparison.png)
+
+The comparison view exposes per-model structural and interface measurements. The displayed values are from a synthetic teaching sample; they are not real-world accuracy or validation results.
+
+### 3. Inspect the assumptions behind a finding
+
+![Methods and thresholds panel](assets/methods-and-thresholds.png)
+
+The methods panel makes heuristic thresholds visible. They are initial review rules, not experimentally validated decision boundaries. Expert calibration remains a next step.
+
+For an earlier version of the interface, see the [original July 2026 implementation screenshot](https://github.com/Shunsuke-max/foldlens/blob/main/docs/audit-2026-07-21/06-desktop-workspace-fresh.png).
+
 ## The problem
 
 A structure prediction is not the same as experimental evidence. Reviewing a prediction requires moving between molecular coordinates, confidence scores, predicted aligned error (PAE), multiple predicted models, and biological context. These artifacts can be difficult to interpret together, and a fluent AI explanation alone cannot establish scientific validity.
