@@ -1,134 +1,153 @@
 # FoldLens
 
-**From protein structure predictions to evidence-linked scientific review.**
+日本語 | [English](README.en.md)
 
-FoldLens is a local-first research workspace for interpreting AlphaFold 3 results. It brings molecular visualization, prediction confidence, cross-model comparison, and a tool-using AI research agent into one interface.
+**タンパク質の構造予測結果を、根拠をたどれる科学的な解析へ。**
 
-Originally built for the Work & Productivity track of OpenAI Build Week 2026, FoldLens has evolved into a broader research software project with a macOS application, a web architecture, and a metered AI service design.
+FoldLensは、AlphaFold 3の予測結果を研究者が解釈・比較・検証するためのローカルファーストな研究支援ワークスペースです。分子構造の3D可視化、予測信頼度、複数モデルの比較、計算結果を根拠として回答するAIエージェントを一つの画面に統合します。
 
-[Original public repository](https://github.com/Shunsuke-max/foldlens) · [macOS releases](https://github.com/Shunsuke-max/foldlens-releases/releases)
+薬学・生命科学とAIの接点に関心を持ち、OpenAI Build Week 2026のWork & Productivity部門向けに開発を始めました。その後、科学的な所見の追跡、macOSアプリ、Webサービスの設計、AIの利用コスト管理へと開発範囲を広げています。
 
-![FoldLens evidence-first review overview](assets/review-overview.png)
+[初期版の公開ソースコード](https://github.com/Shunsuke-max/foldlens) · [macOSアプリの配布ページ](https://github.com/Shunsuke-max/foldlens-releases/releases)
 
-*Implemented interface, captured on September 9, 2026. The example uses experimental PDB 4HLA coordinates with illustrative confidence values, not independent AlphaFold predictions.*
+![FoldLensの解析概要画面](assets/review-overview.png)
 
-## Product walkthrough
+*2026年9月9日の実装監査時の画面。教材として実験構造PDB 4HLAと例示用の信頼度を使用しており、独立したAlphaFold予測の比較ではありません。*
 
-The following implementation screenshots were captured during the September 9, 2026 audit. They illustrate a review workflow, not a live AI performance evaluation. The Japanese interface is shown as captured.
+## 1. 開発背景 — 予測結果を得ることと、理解することは異なる
 
-### 1. Review the evidence behind a finding
+AlphaFoldのような構造予測モデルは、生命科学研究に新しい可能性をもたらしています。一方、予測された立体構造が得られても、どの部分を信頼できるか、タンパク質同士の界面が妥当か、複数の予測で共通する特徴は何かを判断するには、研究者自身による解析が必要です。
 
-![Evidence workspace with linked molecular structure and PAE matrix](assets/evidence-workspace.png)
+従来のレビューでは、分子ビューア、信頼度のJSONファイル、PAEヒートマップ、複数の予測構造などを行き来することがあります。また、汎用LLMに予測結果を説明させるだけでは、数値の根拠や科学的な主張の妥当性を確認できない場合があります。
 
-The workspace connects a selected finding to its molecular region, supporting measurements, and PAE matrix. The user can inspect the evidence before requesting an interpretation.
+そこで、**予測結果を表示するだけでなく、何を確認すべきかを整理し、判断の根拠までたどれる環境を作る**ことを目標にしました。
 
-### 2. Compare predictions rather than relying on a single score
+対象は、構造予測を研究に利用する研究者や学生です。構造予測そのものを行うモデルではなく、予測後の科学的なレビューを支援するソフトウェアとして位置づけています。
 
-![Per-model geometric comparison](assets/model-comparison.png)
+## 2. プロダクトの主要機能
 
-The comparison view exposes per-model structural and interface measurements. The displayed values are from a synthetic teaching sample; they are not real-world accuracy or validation results.
-
-### 3. Inspect the assumptions behind a finding
-
-![Methods and thresholds panel](assets/methods-and-thresholds.png)
-
-The methods panel makes heuristic thresholds visible. They are initial review rules, not experimentally validated decision boundaries. Expert calibration remains a next step.
-
-For an earlier version of the interface, see the [original July 2026 implementation screenshot](https://github.com/Shunsuke-max/foldlens/blob/main/docs/audit-2026-07-21/06-desktop-workspace-fresh.png).
-
-## The problem
-
-A structure prediction is not the same as experimental evidence. Reviewing a prediction requires moving between molecular coordinates, confidence scores, predicted aligned error (PAE), multiple predicted models, and biological context. These artifacts can be difficult to interpret together, and a fluent AI explanation alone cannot establish scientific validity.
-
-FoldLens was designed to make this review process more coherent, traceable, and reproducible.
-
-## Core capabilities
-
-| Capability | What FoldLens provides |
+| 機能 | 内容 |
 | --- | --- |
-| Molecular visualization | Interactive 3D structures, chain and residue selection, surfaces, ligand inspection, and measurements. |
-| Confidence analysis | Integrated pLDDT, pTM, ipTM, PAE, ranking scores, and predicted-region review. |
-| Cross-model comparison | Deterministic heavy-atom contact analysis and interface consistency across distinct coordinate predictions. |
-| Research agent | Goal-directed selection of read-only analysis tools, observation of results, and structured synthesis with evidence references. |
-| Review workflow | Research paths, evidence-linked viewer actions, researcher notes, saved sessions, and HTML reports. |
-| Local-first processing | Molecular files are parsed locally; the AI receives bounded derived facts rather than source coordinates or sequences. |
+| 分子構造の可視化 | 3D構造、鎖・残基の選択、分子表面、リガンドの確認、距離測定 |
+| 信頼度の解析 | pLDDT、pTM、ipTM、PAE、ランキングスコアなどを統合 |
+| 複数モデルの比較 | 原子間接触、構造の差異、界面の整合性を評価 |
+| AI研究エージェント | 質問に応じた解析ツールの選択、計算結果の取得、根拠付き回答 |
+| 研究レビューの管理 | 所見、研究者のメモ、セッション保存、HTMLレポート |
+| ローカルファースト | 元の分子構造ファイルを端末側で処理し、AIには必要な派生情報のみを送信 |
 
-## How the research agent works
+## 3. 実際の利用イメージ
+
+以下は2026年9月9日の実装監査時に撮影した画面です。研究レビューの流れを示すものであり、ライブAIの性能評価ではありません。
+
+### STEP 1 — 所見と根拠を確認する
+
+![分子構造・PAE・根拠の連動画面](assets/evidence-workspace.png)
+
+解析で得られた所見を、対象となる分子領域、測定値、PAE行列と関連づけて表示します。研究者はAIに解釈を求める前に、どのデータが判断の根拠になっているかを確認できます。
+
+### STEP 2 — 複数の予測モデルを比較する
+
+![モデル間比較画面](assets/model-comparison.png)
+
+モデルごとのRMSDや接触の一致率などを比較し、単一の信頼度スコアだけに依存しないレビューを支援します。
+
+画面内の数値は人工的な教材データに基づくものであり、実際の予測精度や臨床的・実験的な有効性を示すものではありません。
+
+### STEP 3 — 判定の前提を確認する
+
+![解析方法と閾値の画面](assets/methods-and-thresholds.png)
+
+所見の生成に用いた解析方法や閾値を明示します。研究者が判定を鵜呑みにせず、その前提を検討できるようにしています。これらは初期の経験的なルールであり、実データを用いた専門家による校正は今後の課題です。
+
+[初期版（2026年7月）の画面](https://github.com/Shunsuke-max/foldlens/blob/main/docs/audit-2026-07-21/06-desktop-workspace-fresh.png)
+
+## 4. AIエージェントの設計
+
+### LLMに計算を任せず、計算結果に基づいて考えさせる
+
+科学的な解析では、自然な文章が生成されることと、数値や判断が正しいことは別の問題です。FoldLensでは、決定論的な解析処理とLLMによる解釈を分離しています。
 
 ```mermaid
 flowchart TD
-    A[AlphaFold 3 results] --> B[Local parsing and deterministic analysis]
-    B --> C[Bounded derived facts]
-    B --> D[Interactive structure and PAE viewer]
-    C --> E[Research agent]
-    E --> F[Select read-only analysis tool]
-    F --> G[Observe deterministic result]
-    G --> H{More evidence needed?}
-    H -->|Within step budget| F
-    H -->|Sufficient or budget exhausted| I[Structured answer]
-    I --> J[Evidence grounding and validation]
+    A["AlphaFold 3の予測結果"] --> B["端末内でのファイル解析・数値計算"]
+    B --> C["必要な派生情報に限定"]
+    B --> D["3D構造・PAEビューア"]
+    C --> E["AI研究エージェント"]
+    E --> F["読み取り専用の解析ツールを選択"]
+    F --> G["決定論的な計算結果を取得"]
+    G --> H{"追加の根拠が必要か"}
+    H -->|実行上限内| F
+    H -->|十分または上限到達| I["構造化された回答"]
+    I --> J["根拠との照合・検証"]
     J --> D
 ```
 
-Rather than asking an LLM to invent scientific measurements, FoldLens separates the numerical analysis from the interpretation. The agent can choose among six bounded analysis tools, including overall confidence inspection, chain-pair interface inspection, uncertain-region discovery, selected PAE-region inspection, cross-model metric comparison, and interface consistency comparison.
+エージェントは研究者の質問に応じて、全体の信頼度、鎖間界面、不確実な領域、選択されたPAE領域、予測間の指標比較、界面の整合性比較という6種類の読み取り専用解析ツールから必要なものを選択します。
 
-The server resolves measurements and evidence references from deterministic facts and validates the final structured response. The research path is visible to the user. If the live AI service is unavailable, a local analyzer provides a clearly labelled fallback.
+各ツールの観測結果をもとに次の解析を選び、上限のあるAction–Observationループを通じて回答をまとめます。最終回答に含まれる測定値や根拠の参照先は、実際の解析データに照合されます。研究者はResearch pathから選択された解析とその観測結果を確認できます。
 
-## Key design decisions
+ライブAIが利用できない場合には、決定論的なローカル解析へ切り替え、その旨を明示する設計にしています。
 
-| Decision | Rationale |
+### 科学的信頼性のための意思決定
+
+| 設計上の判断 | 理由 |
 | --- | --- |
-| Keep source molecular data local | Reduce unnecessary transfer of potentially sensitive research data. |
-| Separate calculation from language generation | Keep numeric findings traceable to the underlying data. |
-| Bound the agent's actions | Make the research path inspectable and limit unnecessary computation. |
-| Distinguish geometric consistency from biological validity | Avoid presenting contact overlap or confidence as evidence of binding, function, or clinical efficacy. |
-| Preserve scientific caveats in the UI and exports | Make uncertainty part of the review rather than an afterthought. |
+| 原データを端末側で処理 | 未公開の研究データを不必要に外部へ送信しないため |
+| 数値計算と文章生成を分離 | 測定値を実データに対応づけ、追跡できるようにするため |
+| エージェントの行動範囲を制限 | 解析過程の透明性と計算コストの管理を両立するため |
+| 予測信頼度と実験的な妥当性を区別 | 高いスコアや接触の一致を、生物学的機能や結合の証明と誤認しないため |
+| 不確実性や反証となる条件を明示 | 結論だけではなく、判断の限界を伝えるため |
 
-## From prototype to product
+## 5. プロトタイプからプロダクトへの発展
 
-| Area | Original project | Current development |
+初期版では、AlphaFold 3の出力を一つの画面でレビューし、根拠付きのAI回答を得る体験を中心に開発しました。その後、複数モデルの科学的な比較や、研究者の継続的な利用を想定した機能へと拡張しています。
+
+| 領域 | 初期版 | 現在の開発 |
 | --- | --- | --- |
-| AI | Structured, evidence-linked analysis | Tool-using research agent with visible observations |
-| Scientific review | Confidence metrics and PAE | Coordinate-contact analysis, cross-model consistency, and review provenance |
-| Delivery | Web workspace | Web architecture and local macOS application |
-| Service design | Basic API limits | Account identity, metered credits, usage limits, and subscription infrastructure |
-| Quality | Parser and UI regression coverage | Expanded tests, analysis benchmarking, and desktop release validation workflows |
+| AI | 根拠付きの構造化回答 | ツールを選択する研究エージェントと観測過程の表示 |
+| 科学的解析 | 信頼度・PAEの確認 | 原子間接触、界面の整合性、所見の追跡 |
+| 提供形態 | Webワークスペース | Webサービス構成とmacOSアプリ |
+| サービス設計 | 基本的なAPI利用制限 | 認証、利用枠、クレジット、課金基盤 |
+| 品質管理 | パーサー・UIの回帰テスト | 解析の検証、ベンチマーク、配布時の検証フロー |
 
-The service design includes distinct analysis modes, credit reservation and settlement, account authentication, subscription billing, and controls for AI usage. Pricing and cost assumptions are hypotheses to evaluate against real usage, not evidence of commercial traction.
+## 6. 事業化を意識したサービス設計
 
-## Technology
+AIを組み込んだ研究支援ツールを継続的に提供するには、モデルの性能だけではなく、利用者ごとの原価や運用コスト、利用体験も考える必要があります。
 
-| Layer | Tools |
+FoldLensでは、解析モードごとの計算量と利用枠、クレジットの予約・確定、ユーザー認証、サブスクリプション課金、利用量制限を設計・実装しています。
+
+ここでの価格設定や原価の想定は検証すべき事業仮説です。実際の利用量やトークンコストを計測して評価する必要があり、現時点で売上や有料ユーザーの獲得を実績として主張するものではありません。Web版のライブAI・認証・課金は、構成済み環境での検証が残っています。
+
+## 7. 技術スタック
+
+| 領域 | 技術 |
 | --- | --- |
-| Interface | React, TypeScript, Vite, 3Dmol.js |
-| AI and server | OpenAI Responses API, Express, Zod |
-| Account and billing infrastructure | Supabase, Stripe |
-| Desktop | Electron, Electron Forge |
-| Testing and delivery | Vitest, TypeScript checks, Vercel, Render |
+| フロントエンド | React、TypeScript、Vite、3Dmol.js |
+| バックエンド・AI | Express、OpenAI Responses API、Zod |
+| 認証・課金基盤 | Supabase、Stripe |
+| デスクトップ | Electron、Electron Forge |
+| テスト・配信 | Vitest、TypeScript、Vercel、Render |
 
-## My contribution
+## 8. 自身の役割とAIを活用した開発
 
-I approach FoldLens as both a scientific software project and a product design problem. I used Codex as an iterative engineering and design partner. My key decisions include keeping molecular files local, grounding AI explanations in deterministic evidence, defining scientific scope boundaries, and prioritizing transparent limitations over impressive but misleading demonstrations.
+FoldLensを通じて取り組んだのは、単に既存のAIをアプリに組み込むことではなく、生命科学研究において何が価値のある情報なのか、どこまでAIに判断を委ねられるのかを考え、プロダクトとして具体化することです。
 
-The project connects my interests in pharmacy, computational biology, AI agents, and building useful software. The original implementation is public; the current development source is kept private.
+開発ではCodexを設計・実装・テスト・改善のパートナーとして活用しました。自身が重視した意思決定は、原データを端末に残すこと、AI回答を計算された根拠に結びつけること、科学的に断定できない領域を定義すること、見栄えのよい回答よりも不確実性の明示を優先することです。
 
-## Current status and limitations
+薬学・生命科学の学びを起点に、研究課題の発見から技術選定、ユーザー体験、運用・事業設計までを一つのプロダクトとして考える経験になっています。
 
-- The macOS application is designed for local analysis and storage. Live AI, sign-in, and billing are web-side capabilities; configured-environment validation remains outstanding according to the current development documentation.
-- Automated test and benchmark workflows are implemented; this portfolio does not claim independently verified passing results, performance gains, user adoption, or revenue.
-- Heavy-atom contact overlap is a geometric heuristic, not an energetic calculation or proof of biological interaction. Distinct coordinates do not establish independent prediction seeds.
-- Expert calibration of heuristic findings on real AlphaFold 3 data remains incomplete. Teaching samples are not experimental validation or a calibration corpus.
-- FoldLens does not perform structure prediction, docking, clinical decision-making, or experimental validation.
+## 9. 現在の到達点と課題
 
-## Next steps
+- macOS版はローカル解析と保存に対応する設計です。ライブAI・認証・課金はWeb版の機能で、構成済み環境での検証が残っています。
+- 自動テストやベンチマークの仕組みは実装済みですが、本ポートフォリオでは独立に検証したテスト通過率や性能向上、利用者数、売上を主張していません。
+- 原子間接触の一致は幾何学的な指標であり、結合エネルギーや生物学的相互作用の証明ではありません。また、座標が異なることは独立した予測seedの証明ではありません。
+- 経験的な判定閾値は実際のAlphaFold 3予測結果と専門家の評価を用いた校正が必要です。
+- FoldLensは構造予測、ドッキング、臨床判断、実験的検証を行うツールではありません。
 
-- Calibrate scientific findings against expert-reviewed real-world prediction cases.
-- Evaluate research workflow usability and agent evidence quality with researchers.
-- Measure analysis-mode costs and validate the configured web billing lifecycle.
-- Document reproducible evaluation results and improve the research review experience.
+今後は研究者によるレビュー体験の評価、実データを用いた科学的所見の校正、AI回答の根拠の妥当性、解析モード別の原価と課金ライフサイクルの検証を進めたいと考えています。
 
-## Attribution
+## 10. 公開範囲・帰属
 
-FoldLens is an independent project, not an official AlphaFold product. AlphaFold Server outputs are subject to their [applicable terms](https://alphafoldserver.com/output-terms). The original example uses experimental coordinates from [PDB 4HLA](https://www.rcsb.org/structure/4HLA) with illustrative confidence values, not independently generated AlphaFold predictions. Molecular visualization uses [3Dmol.js](https://3dmol.org/).
+本リポジトリはプロダクトおよび技術開発の紹介用です。初期版のソースコードは公開していますが、現在の開発コードは非公開です。
 
-This repository is a product and engineering portfolio, not the current application source repository.
+FoldLensは独立したプロジェクトであり、AlphaFoldの公式製品ではありません。AlphaFold Serverの出力には[適用される利用条件](https://alphafoldserver.com/output-terms)があります。教材に使用した実験構造は[RCSB PDB 4HLA](https://www.rcsb.org/structure/4HLA)です。例示用の信頼度は実際のAlphaFold予測結果ではありません。分子構造の描画には[3Dmol.js](https://3dmol.org/)を使用しています。
