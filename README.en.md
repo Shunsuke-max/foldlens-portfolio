@@ -169,7 +169,7 @@ flowchart TD
 
 I approached FoldLens not as an LLM wrapper exercise, but as a scientific software and data-engineering challenge: **what quantitative evidence do life scientists actually need to trust an AI-assisted structural review, and where must deterministic computation end and experimental validation begin?**
 
-While using AI coding agents as iterative engineering partners, I owned the core architectural and scientific decisions: enforcing the local-first privacy boundary, introducing duplicate-coordinate checks and versioned deterministic rules, requiring evidence grounding with explicit falsification conditions, and structuring metered service economics.
+While using AI coding agents as iterative engineering partners, I owned the core architectural and scientific decisions: enforcing the local-first privacy boundary, introducing duplicate-coordinate checks and versioned deterministic rules, requiring evidence grounding with explicit falsification conditions, structuring metered service economics, and auditing UI copy with an explicit UX-writing standard ([Design Note (JP)](docs/ux-writing-in-scientific-ai.md) · [8-Point Checklist (JP)](docs/ux-writing-checklist.md)).
 
 ---
 
