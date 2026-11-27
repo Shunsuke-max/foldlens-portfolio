@@ -10,13 +10,15 @@
 [![Case 2](https://img.shields.io/badge/Real%20AF3%20%232-Human%203--Chain%20Divergence-f59e0b?style=flat-square)](https://shunsuke-max.github.io/foldlens-portfolio/?case=human)
 [![Gate Demo](https://img.shields.io/badge/Quality%20Gate-Duplicate%20Coords%20(4HLA)-6366f1?style=flat-square)](https://shunsuke-max.github.io/foldlens-portfolio/?case=4hla)
 
-> **▶ [Launch Interactive Browser Demo (Zero Install · No API Key · 100% Client-Side)](https://shunsuke-max.github.io/foldlens-portfolio/)**  
-> Preloaded with two real AlphaFold 3 Server prediction ensembles (5 models each) plus a duplicate-coordinate quality gate case (4HLA). All CIF/PAE parsing, heavy-atom contact comparison, 3Dmol.js rendering, and deterministic offline answers run locally inside browser Web Workers.
+> **▶ [Launch Interactive Walkthrough Demo (60s Guided Tour · Zero Backend AI · Client-Side)](https://shunsuke-max.github.io/foldlens-portfolio/)**  
+> Opens with a **4-stage workflow intro & scenario picker** (2 real AF3 outputs + 1 duplicate-coordinate gate). Pick any case to launch a **5-step spotlight tour** that walks through the real live workspace—including a **pre-designed offline replay of `foldlens-next`’s 6-tool AI research agent** with inspectable tool steps and clickable 3D/PAE evidence links.
 >
-> **30-Second Guided Walkthrough**
-> 1. **Case 1/3 (Default view)**: Follow the top 3-step bar (`1 Summary` → `2 5-Model Table` → `3 3D & PAE`) to inspect how FoldLens flags `11.0 Å` interface PAE tension behind `ipTM 0.79`, then try a one-click grounded question in Step 3.
-> 2. **Case 2/3 (Human 3-chain)**: Click **Next Case #2** in the guide bar to see ensemble divergence warnings (`60.3 Å` median global RMSD) and automated isolation of the disordered Chain A tail (`172–562`).
-> 3. **Case 3/3 (Duplicate Gate 4HLA)**: Click **Next Case #3** to see identical-coordinate detection (`0.001 Å` precision) block false reproducibility claims (instant `EN / 日本語` toggle in the top bar).
+> **5-Step Guided Walkthrough**
+> 1. **Step 1 · Finding-First Triage**: On-device Web Worker compares all 5 models and leads with the top priority finding.
+> 2. **Step 2 · Support vs. Tension & Limits**: Inspect E1 / C1 / U1 alongside the color-keyed 3D chain preview.
+> 3. **Step 3 · 5-Model Quantitative Table**: Audit global RMSD, interface RMSD, and heavy-atom contact Jaccard overlap.
+> 4. **Step 4 · Linked 3D & PAE Matrix**: Inspect 5 Å contacts synchronized with the auto-opened PAE heatmap.
+> 5. **Step 5 · 6-Tool AI Agent Replay (No API Required)**: Inspect the 3-step Research Path, grounded conclusion, clickable 3D/PAE evidence buttons, and falsification conditions (exit tour anytime to explore freely; instant `EN / 日本語` toggle).
 
 FoldLens is a **local-first AI research workspace** for interpreting, comparing, and auditing AlphaFold 3 predictions. It unifies 3D molecular visualization, confidence/PAE inspection, cross-model geometric and contact analysis, and a tool-using AI research agent that grounds every claim in deterministic measurements.
 
