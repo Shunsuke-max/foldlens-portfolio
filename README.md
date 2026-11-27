@@ -5,6 +5,7 @@
 **AlphaFold 3 の構造予測結果を、データ品質チェックと厳密な数値根拠にもとづいて検証できる研究ワークスペース。**
 
 [![Live Interactive Demo](https://img.shields.io/badge/Live%20Demo-ブラウザで今すぐ試す%20(AF3実データ搭載)-0ea5e9?style=for-the-badge)](https://shunsuke-max.github.io/foldlens-portfolio/)
+[![Core Source & Tests](https://img.shields.io/badge/Core%20Source%20%26%20Tests-foldlens--core%20(125%20tests)-22c55e?style=flat-square)](https://github.com/Shunsuke-max/foldlens-core)
 [![Case 1](https://img.shields.io/badge/AF3実例①-PICALM1a--VAMP721-10b981?style=flat-square)](https://shunsuke-max.github.io/foldlens-portfolio/?case=vamp721)
 [![Case 2](https://img.shields.io/badge/AF3実例②-Human%203鎖不一致-f59e0b?style=flat-square)](https://shunsuke-max.github.io/foldlens-portfolio/?case=human)
 [![Gate Demo](https://img.shields.io/badge/品質チェック-重複データ検出%20(4HLA)-6366f1?style=flat-square)](https://shunsuke-max.github.io/foldlens-portfolio/?case=4hla)
@@ -16,7 +17,7 @@ FoldLens は、AlphaFold 3 の構造予測結果を研究者が解釈・比較�
 
 薬学・生命科学とデータサイエンス／AI の接点から着想し、OpenAI Build Week 2026（Work & Productivity 部門）向けに初期版を開発しました。その後、重複座標の自動検出などのデータ品質チェック、ルールを版管理した自動所見エンジン、ツール選択型 AI エージェント、macOS デスクトップアプリ、さらに認証・従量課金を備えた Web サービス構成へと拡張しています。
 
-[▶ ライブデモ（GitHub Pages）](https://shunsuke-max.github.io/foldlens-portfolio/) · [初期版の公開ソースコード](https://github.com/Shunsuke-max/foldlens) · [macOS アプリ配布ページ](https://github.com/Shunsuke-max/foldlens-releases/releases)
+[▶ ライブデモ（GitHub Pages）](https://shunsuke-max.github.io/foldlens-portfolio/) · [**コア実装・テスト（foldlens-core）**](https://github.com/Shunsuke-max/foldlens-core) · [macOS アプリ配布](https://github.com/Shunsuke-max/foldlens-releases/releases) · [初期版アーカイブ（v1）](https://github.com/Shunsuke-max/foldlens)
 
 > **創薬・構造研究における設計上の3つの要点**
 > 1. **未公開データを外に出さない（ローカルファースト）**：元の CIF / PAE JSON・原子座標・配列は端末内（ブラウザ／Web Worker）で処理し、LLM には座標から算出した最小限の要約指標（スコア・接触数など）のみを送信します。
@@ -159,7 +160,7 @@ flowchart TD
 
 ## 4. プロトタイプからプロダクトへの発展と技術スタック
 
-| 領域 | 初期版（2026年7月・公開） | 現在の構成（非公開本体 ＋ クライアント静的デモ公開） |
+| 領域 | 初期版（2026年7月・アーカイブ済み） | 現在の構成（公開コア `foldlens-core` ＋ 静的デモ ＋ 非公開製品本体） |
 | :--- | :--- | :--- |
 | **AI アーキテクチャ** | 根拠付き構造化回答（単発） | 6 ツール選択型研究エージェント＋思考・観測過程の表示＋オフライン切替 |
 | **科学的解析** | 信頼度・PAE ビューア | 重複座標検出、重原子接触・Jaccard・界面 RMSD、Web Worker 非同期解析 |
@@ -190,6 +191,6 @@ FoldLens は「LLM をアプリに組み込むこと」自体が目的ではな�
 * **科学的限界**：重原子接触の一致率や RMSD は立体配置の幾何学的な指標であり、結合自由エネルギー・結合親和性・生物学的機能の証明ではありません。座標が異なることは独立した予測 seed の証明ではなく、経験的な判定閾値は実 AlphaFold 3 データと専門家による校正が必要です。また、FoldLens は構造予測・ドッキング・臨床判断・実験的検証を行うソフトウェアではありません。
 * **ライブデモの公開構成**：[GitHub Pages ライブデモ](https://shunsuke-max.github.io/foldlens-portfolio/) は、サーバー・認証・課金・外部 LLM 通信およびソースマップを含まないブラウザ完結型の静的ビルドです。ファイル解析・モデル比較・オフライン応答はすべて端末内のみで実行されます。
 * **AlphaFold Server 出力の利用条件**：本ポートフォリオおよびライブデモに含まれる実際の AlphaFold 3 予測データ 2 件（非商用ポートフォリオ展示用・Web 配信のため MSA およびテンプレート構造ファイルを省略し、モデル構造・信頼度 JSON は未改変で収録）は、[AlphaFold Server Output Terms of Use](https://alphafoldserver.com/output-terms)（非商用利用限定）の適用を受けます（規約全文の写しをライブデモ内 [`ALPHAFOLD_SERVER_TERMS_OF_USE.md`](https://shunsuke-max.github.io/foldlens-portfolio/samples/ALPHAFOLD_SERVER_TERMS_OF_USE.md) に同梱）。
-* **帰属**：FoldLens は独立プロジェクトであり AlphaFold の公式製品ではありません。初期版ソースコードは [Shunsuke-max/foldlens](https://github.com/Shunsuke-max/foldlens) にて公開しています。教材データには [RCSB PDB 4HLA](https://www.rcsb.org/structure/4HLA)、3D 可視化には [3Dmol.js](https://3dmol.org/) を使用しています。
+* **帰属**：FoldLens は独立プロジェクトであり AlphaFold の公式製品ではありません。v0.2.8 の解析エンジン・AI エージェント・自動テストは [Shunsuke-max/foldlens-core](https://github.com/Shunsuke-max/foldlens-core) にて公開しています（認証・課金を含む製品本体は非公開運用・面接時のコード共有に対応。初期版 v1 は [Shunsuke-max/foldlens](https://github.com/Shunsuke-max/foldlens) にアーカイブ済み）。教材データには [RCSB PDB 4HLA](https://www.rcsb.org/structure/4HLA)、3D 可視化には [3Dmol.js](https://3dmol.org/) を使用しています。
 
 </details>

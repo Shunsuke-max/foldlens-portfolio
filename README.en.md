@@ -5,6 +5,7 @@
 **Turning AlphaFold 3 predictions into data-quality-checked, deterministically grounded scientific reviews.**
 
 [![Live Interactive Demo](https://img.shields.io/badge/Live%20Demo-Try%20in%20Browser%20(Real%20AF3%20Data)-0ea5e9?style=for-the-badge)](https://shunsuke-max.github.io/foldlens-portfolio/)
+[![Core Source & Tests](https://img.shields.io/badge/Core%20Source%20%26%20Tests-foldlens--core%20(125%20tests)-22c55e?style=flat-square)](https://github.com/Shunsuke-max/foldlens-core/blob/main/README.en.md)
 [![Case 1](https://img.shields.io/badge/Real%20AF3%20%231-PICALM1a--VAMP721-10b981?style=flat-square)](https://shunsuke-max.github.io/foldlens-portfolio/?case=vamp721)
 [![Case 2](https://img.shields.io/badge/Real%20AF3%20%232-Human%203--Chain%20Divergence-f59e0b?style=flat-square)](https://shunsuke-max.github.io/foldlens-portfolio/?case=human)
 [![Gate Demo](https://img.shields.io/badge/Quality%20Gate-Duplicate%20Coords%20(4HLA)-6366f1?style=flat-square)](https://shunsuke-max.github.io/foldlens-portfolio/?case=4hla)
@@ -16,7 +17,7 @@ FoldLens is a **local-first AI research workspace** for interpreting, comparing,
 
 Originally built for the Work & Productivity track of OpenAI Build Week 2026 from the intersection of pharmacy, structural biology, and AI engineering, FoldLens has evolved to include automated data-quality checks (duplicate-coordinate detection), a versioned deterministic finding engine, a six-tool research agent, a macOS desktop application, and a metered web architecture.
 
-[▶ Live Demo (GitHub Pages)](https://shunsuke-max.github.io/foldlens-portfolio/) · [Original public repository](https://github.com/Shunsuke-max/foldlens) · [macOS releases](https://github.com/Shunsuke-max/foldlens-releases/releases)
+[▶ Live Demo (GitHub Pages)](https://shunsuke-max.github.io/foldlens-portfolio/) · [**Core Engine & Tests (`foldlens-core`)**](https://github.com/Shunsuke-max/foldlens-core/blob/main/README.en.md) · [macOS releases](https://github.com/Shunsuke-max/foldlens-releases/releases) · [Archived v1 prototype](https://github.com/Shunsuke-max/foldlens)
 
 > **Three Core Design Pillars for Drug Discovery & Structural R&D**
 > 1. **Confidentiality by Design (Local-First)**: Source CIF/PAE JSON files, atomic coordinates, and sequences are parsed on-device (browser / Web Workers); only compact derived metrics (`AnalysisFacts`) reach the LLM.
@@ -153,7 +154,7 @@ flowchart TD
 
 ## 4. Evolution from Prototype to Product & Stack
 
-| Area | Original Public Release (July 2026) | Current Architecture (Private Core + Public Static Demo) |
+| Area | Original Prototype (July 2026 · Archived) | Current Architecture (Public `foldlens-core` + Static Demo + Private App) |
 | :--- | :--- | :--- |
 | **AI Architecture** | Single-pass evidence-linked structured answer | Six-tool research agent with inspectable Research path + offline fallback |
 | **Scientific Analysis** | Confidence metrics & PAE viewer | Duplicate-coordinate gate, heavy-atom contacts, Jaccard/interface RMSD, Web Worker execution |
@@ -179,6 +180,6 @@ While using AI coding agents as iterative engineering partners, I owned the core
 * **Scientific boundaries**: Heavy-atom contact overlap and RMSD are geometric heuristics, not binding-energy calculations or proof of biological interaction. Distinct coordinates do not prove independent prediction seeds, and heuristic thresholds require expert calibration on real AlphaFold 3 outputs. FoldLens does not perform structure prediction, docking, clinical decision-making, or experimental validation.
 * **Static demo boundary**: The [GitHub Pages live demo](https://shunsuke-max.github.io/foldlens-portfolio/) is a client-only static build with no server, authentication, billing, external LLM calls, or source maps. All structure parsing and deterministic analysis execute locally in the browser.
 * **AlphaFold Server Output Terms of Use**: The two real AlphaFold 3 Server prediction ensembles bundled in this non-commercial portfolio demo (model CIF and confidence JSON files unmodified; MSAs and template hits omitted for web delivery) are provided under and subject to the [AlphaFold Server Output Terms of Use](https://alphafoldserver.com/output-terms) (non-commercial use only; full copy bundled at [`ALPHAFOLD_SERVER_TERMS_OF_USE.md`](https://shunsuke-max.github.io/foldlens-portfolio/samples/ALPHAFOLD_SERVER_TERMS_OF_USE.md)).
-* **Attribution**: FoldLens is an independent project and not an official AlphaFold product. Original public source: [Shunsuke-max/foldlens](https://github.com/Shunsuke-max/foldlens). Duplicate-gate teaching coordinates use [RCSB PDB 4HLA](https://www.rcsb.org/structure/4HLA); molecular rendering uses [3Dmol.js](https://3dmol.org/).
+* **Attribution**: FoldLens is an independent project and not an official AlphaFold product. The v0.2.8 deterministic engine, 6-tool grounded agent, calibration scripts, and tests are open-sourced at [Shunsuke-max/foldlens-core](https://github.com/Shunsuke-max/foldlens-core) (commercial auth/billing app kept private; live walkthrough available in interviews; original v1 prototype archived at [Shunsuke-max/foldlens](https://github.com/Shunsuke-max/foldlens)). Duplicate-gate teaching coordinates use [RCSB PDB 4HLA](https://www.rcsb.org/structure/4HLA); molecular rendering uses [3Dmol.js](https://3dmol.org/).
 
 </details>
