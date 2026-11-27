@@ -11,7 +11,12 @@
 [![Gate Demo](https://img.shields.io/badge/Quality%20Gate-Duplicate%20Coords%20(4HLA)-6366f1?style=flat-square)](https://shunsuke-max.github.io/foldlens-portfolio/?case=4hla)
 
 > **▶ [Launch Interactive Browser Demo (Zero Install · No API Key · 100% Client-Side)](https://shunsuke-max.github.io/foldlens-portfolio/)**  
-> Preloaded with two real AlphaFold 3 Server prediction ensembles (5 models each). All CIF/PAE parsing, heavy-atom contact comparison, 3Dmol.js rendering, and deterministic offline analysis execute locally inside browser Web Workers—you can also drag and drop your own AF3 ZIP without uploading raw coordinates.
+> Preloaded with two real AlphaFold 3 Server prediction ensembles (5 models each) plus a duplicate-coordinate quality gate case (4HLA). All CIF/PAE parsing, heavy-atom contact comparison, 3Dmol.js rendering, and deterministic offline answers run locally inside browser Web Workers.
+>
+> **30-Second Guided Walkthrough**
+> 1. **Case 1/3 (Default view)**: Follow the top 3-step bar (`1 Summary` → `2 5-Model Table` → `3 3D & PAE`) to inspect how FoldLens flags `11.0 Å` interface PAE tension behind `ipTM 0.79`, then try a one-click grounded question in Step 3.
+> 2. **Case 2/3 (Human 3-chain)**: Click **Next Case #2** in the guide bar to see ensemble divergence warnings (`60.3 Å` median global RMSD) and automated isolation of the disordered Chain A tail (`172–562`).
+> 3. **Case 3/3 (Duplicate Gate 4HLA)**: Click **Next Case #3** to see identical-coordinate detection (`0.001 Å` precision) block false reproducibility claims (instant `EN / 日本語` toggle in the top bar).
 
 FoldLens is a **local-first AI research workspace** for interpreting, comparing, and auditing AlphaFold 3 predictions. It unifies 3D molecular visualization, confidence/PAE inspection, cross-model geometric and contact analysis, and a tool-using AI research agent that grounds every claim in deterministic measurements.
 
